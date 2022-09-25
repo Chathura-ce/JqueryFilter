@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        .row {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .row::after {
+            display: table;
+            clear: both;
+            content: "";
+        }
+    </style>
+</head>
+<body>
+<h1>Simple jQuery Table Data Filter</h1>
+<div class="row">
+<!--    <div class="col-3"><input class="form-control" type="text" id="search" placeholder="Search for ...""></div>-->
+
+    <div class=" col-2">
+        <select onchange="filterData();" class="form-control secondary-select" id="materialCode">
+            <option value="">materialCode</option>
+            <option value="16014344C">16014344C</option>
+            <option value="16016398A">16016398A</option>
+            <option value="16009838A">16009838A</option>
+        </select>
+    </div>
+    <div class="col-2">
+        <select onchange="filterData();" class="form-control secondary-select" id="plantCode">
+            <option value="">plantCode</option>
+            <option value="0119">0119</option>
+            <option value="0379">0379</option>
+        </select>
+    </div>
+    <div class="col-2">
+        <select onchange="filterData();" class="form-control secondary-select" id="vsCode">
+            <option value="">vsCode</option>
+            <option value="023">023</option>
+            <option value="0379">0379</option>
+        </select>
+    </div>
+    <div class="col-2">
+        <select onchange="filterData();" class="form-control secondary-select" id="statusCode">
+            <option value="">statusCode</option>
+            <option value="BOOKED">BOOKED</option>
+            <option value="RELEASED">RELEASED</option>
+        </select>
+    </div>
+    <div class="col-1">
+<!--        <button id="filterButton" class="button button-clear butt-heith">-->
+<!--            Apply filters-->
+<!--        </button>-->
+    </div>
+</div>
+
+<!--<button id="cancelFilters" class="button button-deactivate float-right">-->
+<!--    Cancel filters-->
+<!--</button>-->
+
+<table cellspacing="0" class="table-editor" id="ordersList">
+    <thead>
+    <tr>
+        <th>Production order code</th>
+        <th>Material code</th>
+        <th>Target quantity</th>
+        <th>Plant code</th>
+        <th>Value stream code</th>
+        <th>Status</th>
+        <th>Release date</th>
+        <th>Activation date</th>
+        <th>Booking date</th>
+        <th>TPT (d)</th>
+    </tr>
+    </thead>
+    <tbody id="orderListData">
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20943">14298947</a>
+        </td>
+        <td class="column1">
+            16014344C
+        </td>
+        <td>
+            1
+        </td>
+        <td class="column2">
+            0119
+        </td>
+        <td class="column3">
+            023
+        </td>
+        <td class="column4">
+            BOOKED
+        </td>
+        <td>
+            2020-03-02 06:57:42
+        </td>
+
+        <td></td>
+
+        <td>
+            2020-03-02 08:12:22
+        </td>
+        <td>
+            0.1
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20944">80150671</a>
+        </td>
+        <td class="column1">
+            16009838A
+        </td>
+        <td>
+            800
+        </td>
+        <td class="column2">
+
+        </td>
+        <td class="column3">
+            023
+        </td>
+        <td class="column4">
+            BOOKED
+        </td>
+        <td>
+            2020-03-02 08:02:32
+        </td>
+
+        <td></td>
+
+        <td>
+            2020-03-02 15:30:51
+        </td>
+        <td>
+            0.3
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20945">80150672</a>
+        </td>
+        <td class="column1">
+            15000987A
+        </td>
+        <td>
+            503
+        </td>
+        <td class="column2">
+
+        </td>
+        <td class="column3">
+
+        </td>
+        <td class="column4">
+            BOOKED
+        </td>
+        <td>
+            2020-03-02 08:28:04
+        </td>
+
+        <td></td>
+
+        <td>
+            2020-03-13 00:00:00
+        </td>
+        <td>
+            10.6
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20946">80150673</a>
+        </td>
+        <td class="column1">
+            11011572E
+        </td>
+        <td>
+            153
+        </td>
+        <td class="column2">
+
+        </td>
+        <td class="column3">
+            023
+        </td>
+        <td class="column4">
+            BOOKED
+        </td>
+        <td>
+            2020-03-02 08:30:32
+        </td>
+
+        <td></td>
+
+        <td>
+            2020-03-06 00:00:00
+        </td>
+        <td>
+            3.6
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20947">80150674</a>
+        </td>
+        <td class="column1">
+            16009838A
+        </td>
+        <td>
+            153
+        </td>
+        <td class="column2">
+            0119
+        </td>
+        <td class="column3">
+
+        </td>
+        <td class="column4">
+            BOOKED
+        </td>
+        <td>
+            2020-03-02 08:30:57
+        </td>
+
+        <td></td>
+
+        <td>
+            2020-03-10 00:00:00
+        </td>
+        <td>
+            7.6
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20948">80150675</a>
+        </td>
+        <td class="column1">
+            11014966C
+        </td>
+        <td>
+            153
+        </td>
+        <td class="column2">
+
+        </td>
+        <td class="column3">
+            023
+        </td>
+        <td class="column4">
+            RELEASED
+        </td>
+        <td>
+            2020-03-02 08:31:26
+        </td>
+
+        <td></td>
+
+        <td></td>
+        <td>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20949">80150676</a>
+        </td>
+        <td class="column1">
+            11014264D
+        </td>
+        <td>
+            79
+        </td>
+        <td class="column2">
+
+        </td>
+        <td class="column3">
+
+        </td>
+        <td class="column4">
+            BOOKED
+        </td>
+        <td>
+            2020-03-02 08:33:48
+        </td>
+
+        <td></td>
+
+        <td>
+            2020-03-06 00:00:00
+        </td>
+        <td>
+            3.6
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20950">80150677</a>
+        </td>
+        <td class="column1">
+            18300753C
+        </td>
+        <td>
+            79
+        </td>
+        <td class="column2">
+
+        </td>
+        <td class="column3">
+            023
+        </td>
+        <td class="column4">
+            BOOKED
+        </td>
+        <td>
+            2020-03-02 08:34:16
+        </td>
+
+        <td></td>
+
+        <td>
+            2020-03-10 00:00:00
+        </td>
+        <td>
+            7.6
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20951">80150678</a>
+        </td>
+        <td class="column1">
+            11020109B
+        </td>
+        <td>
+            79
+        </td>
+        <td class="column2">
+
+        </td>
+        <td class="column3">
+
+        </td>
+        <td class="column4">
+            RELEASED
+        </td>
+        <td>
+            2020-03-02 08:34:38
+        </td>
+
+        <td></td>
+
+        <td></td>
+        <td>
+        </td>
+
+    </tr>
+    <tr>
+        <td>
+            <a href="/ProductionOrderManagement/ProductionOrderOperations?productionOrderId=20952">80150679</a>
+        </td>
+        <td class="column1">
+            15001454B
+        </td>
+        <td>
+            100
+        </td>
+        <td class="column2">
+
+        </td>
+        <td class="column3">
+            023
+        </td>
+        <td class="column4">
+            BOOKED
+        </td>
+        <td>
+            2020-03-02 08:37:59
+        </td>
+
+        <td></td>
+
+        <td>
+            2020-03-12 00:00:00
+        </td>
+        <td>
+            9.6
+        </td>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+<script>
+    function filterData() {
+        const materialCode = $('#materialCode').val();
+        const plantCode = $('#plantCode').val();
+        const vsCode = $('#vsCode').val();
+        const statusCode = $('#statusCode').val();
+
+        const filterParams = [];
+
+        if (materialCode != '') {
+            filterParams.push({
+                td: 1,
+                filterVal: materialCode
+            })
+        }
+
+        if (plantCode != '') {
+            filterParams.push({
+                td: 3,
+                filterVal: plantCode
+            })
+        }
+
+        if (vsCode != '') {
+            filterParams.push({
+                td: 4,
+                filterVal: vsCode
+            })
+        }
+
+        if (statusCode != '') {
+            filterParams.push({
+                td: 5,
+                filterVal: statusCode
+            })
+        }
+
+        $('#orderListData tr').each(function (i, row) {
+            let flag = true;
+
+            $(filterParams).each(function (k, filters) {
+                if ($(row).find(`td:eq(${filters.td})`).text().trim() == filters.filterVal.trim()) {
+                    flag *= true;
+                } else {
+                    flag = false;
+                }
+            });
+
+            if (flag) $(row).show();
+            else $(row).hide();
+        });
+
+    }
+</script>
